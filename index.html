@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra w tysiaca</title>
+</head>
+<body>
+    <header>
+        Tutaj rozgrywa się gra - ale to nie jest rozwiąznie na stałe
+    </header>
+    <main> 
+        <section>
+
+        </section>
+
+        <section id="tablePlayer1">
+            <div class="handPlayer">ręka gracza 1: </div>
+            <div class="actionPlayer">akcje gracza 1: 
+                <span>negocjacje gracza 1:</span>
+                <input type="number" id="negocjacje1value" name="negocjacje" min=100 max=390 step=10 any>
+                <input type="submit" value="podbijam"id="negocjacje1btn">
+                <input type="submit" value="pasuję" id="negocjacje1end">
+            </div>
+        </section> 
+        <section id="tablePlayer2">
+            <div class="handPlayer">ręka gracza 2: </div>
+            <div class="actionPlayer">akcje gracza 2: 
+                <span>negocjacje gracza 2:</span>
+                <input type="number" id="negocjacje2value" name="negocjacje" min=100 max=390 step=10 any>
+                <input type="submit" value="podbijam"id="negocjacje2btn">
+                <input type="submit" value="pasuję" id="negocjacje2end">
+            </div>
+        </section> 
+        <section id="tablePlayer3">
+            <div class="handPlayer">ręka gracza 3: </div>
+            <div class="actionPlayer">akcje gracza 3: 
+                <span>negocjacje gracza 3:</span>
+                <input type="number" id="negocjacje3value" name="negocjacje" min=100 max=390 step=10 any>
+                <input type="submit" value="podbijam"id="negocjacje3btn">
+                <input type="submit" value="pasuję" id="negocjacje3end">
+            </div>
+        </section> 
+        <section id="tablePlayer4">
+            <div class="handPlayer">ręka gracza 4: </div>
+            <div class="actionPlayer">akcje gracza 4: 
+                <span>negocjacje gracza 4:</span>
+                <input type="number" id="negocjacje4value" name="negocjacje" min=100 max=390 step=10 any>
+                <input type="submit" value="podbijam"id="negocjacje4btn">
+                <input type="submit" value="pasuję" id="negocjacje4end">
+
+            </div>
+        </section> 
+
+        <section class="mainGame">
+            <div class="mainTable">tutaj będą leżały karty aktualnie zagrane przez graczy</div>
+        </section>
+
+    </main>
+    <footer>
+        <p></p>
+    </footer>
+
+    <script src="./js/index.js"></script>
+    <script>
+        const game = new Game();
+        game.initialGame();
+    </script>
+</body>
+</html>

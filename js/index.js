@@ -1,4 +1,5 @@
 class Game {
+
   constructor() {
     this.StageOftheGame = 0; //0 - preparing to game, 1 - negotiation, 2 - sharing cards, 3- Game, 4 - check, who won
     this.tablePlayer1 = document.getElementById("tablePlayer1");
@@ -50,6 +51,13 @@ class Game {
 
 
     //2 - sharing cards
+
+    this.player1StillWaitForACard = true;
+    this.player2StillWaitForACard = true;
+    this.player3StillWaitForACard = true;
+    this.player4StillWaitForACard = true;
+
+    this.HowManyPeopleWaitingForACard = 3;
 
     //3 - Game
 
@@ -306,7 +314,7 @@ class Game {
         name: "AW",
       },
     ];
-
+    
     //potasuj - też chwilow wkleję funkcję do tasowania ale docelowo będę ją importować
     function shuffle(array) {
         let currentIndex = array.length,  randomIndex;
@@ -513,9 +521,128 @@ class Game {
     this.initialStage2();
   }
 
-  initialStage2() {}
+  initialStage2() {
+    this.SetsPlayer1=[...this.SetsPlayer1, ...this.SetsFromMiddle];
 
-  initialStage3() {}
+    function addNewImg(where, className, content){
+      const renderingNewElement = document.createElement("img");
+      renderingNewElement.setAttribute("class", className);
+      renderingNewElement.setAttribute("src", content);
+      where.appendChild(renderingNewElement);
+  }
+
+  function addNewDiv(where, className, content, event){
+    const renderNewDIVElement = document.createElement("div");
+    renderNewDIVElement.setAttribute("class", className);
+    renderNewDIVElement.innerHTML=content;
+    where.parentNode.insertBefore(renderNewDIVElement, where.nextSibling);
+    renderNewDIVElement.addEventListener('click', event);
+}
+
+  this.SetsFromMiddle.map(value => {
+      addNewImg(this.tablePlayer1.children[0], "cardInHand", value.img)
+  })
+
+  //JAK WARTOSCI zapiszę TABLICach TO ŁĄTWIEJ ZAIMPLEMENTUJE poprawnie gre. aktuanie rozgrywka jest tak ustawiona żę bez znaczenia kto da najwiecej, negocjację wygrywa player 1
+
+  this.player1StillWaitForACard = false;
+
+  const tempArray = [...document.getElementById("tablePlayer1").children[0].children]
+
+  
+
+  tempArray.map((element, )=>{
+      element.addEventListener('click', (element)=>{
+        element.srcElement.classList.add('hideElement');
+
+          if(this.player4StillWaitForACard){
+            addNewDiv(element.srcElement, "greyElement", 4, ()=>{
+              const indexCart = [...element.srcElement.parentNode.children].indexOf(element.srcElement);
+              this.SetsPlayer4[5] = this.SetsPlayer1[indexCart];
+              addNewImg(this.tablePlayer4.children[0], "cardInHand", this.SetsPlayer4[5].img);
+              for(let i = 0; i < this.HowManyPeopleWaitingForACard ; i++){
+                element.srcElement.nextSibling.remove()
+              }
+
+              this.player4StillWaitForACard = false;
+              this.HowManyPeopleWaitingForACard = this.HowManyPeopleWaitingForACard - 1;
+              this.endStage2();
+            });
+          }
+
+
+          if(this.player3StillWaitForACard){
+            addNewDiv(element.srcElement, "greyElement", 3, ()=>{
+              const indexCart = [...element.srcElement.parentNode.children].indexOf(element.srcElement);
+              this.SetsPlayer3[5] = this.SetsPlayer1[indexCart];
+              addNewImg(this.tablePlayer3.children[0], "cardInHand", this.SetsPlayer3[5].img);
+              for(let i = 0; i < this.HowManyPeopleWaitingForACard ; i++){
+                element.srcElement.nextSibling.remove()
+              }
+
+              this.player3StillWaitForACard = false;
+              this.HowManyPeopleWaitingForACard = this.HowManyPeopleWaitingForACard - 1;
+              this.endStage2();
+            });
+          }
+
+
+          if(this.player2StillWaitForACard){
+            addNewDiv(element.srcElement, "greyElement", 2, ()=>{
+              const indexCart = [...element.srcElement.parentNode.children].indexOf(element.srcElement);
+              this.SetsPlayer2[5] = this.SetsPlayer1[indexCart];
+              addNewImg(this.tablePlayer2.children[0], "cardInHand", this.SetsPlayer2[5].img);
+              for(let i = 0; i < this.HowManyPeopleWaitingForACard ; i++){
+                element.srcElement.nextSibling.remove()
+              }
+
+              this.player2StillWaitForACard = false;
+              this.HowManyPeopleWaitingForACard = this.HowManyPeopleWaitingForACard - 1;
+              this.endStage2();
+            });
+          }
+      })
+
+  })
+
+  }
+
+  endStage2(){
+
+
+      //zdublowana funkcja
+    function addNewImg(where, className, content){
+      const renderingNewElement = document.createElement("img");
+      renderingNewElement.setAttribute("class", className);
+      renderingNewElement.setAttribute("src", content);
+      where.appendChild(renderingNewElement);
+  }
+
+  this.showNewInfo("Pracz rozdał już karty. zaczyna się gra - Stage 3");
+
+
+    if(this.HowManyPeopleWaitingForACard === 0){
+
+      this.SetsPlayer1.splice(this.SetsPlayer1.indexOf(this.SetsPlayer2[5]),1);
+      this.SetsPlayer1.splice(this.SetsPlayer1.indexOf(this.SetsPlayer3[5]),1);
+      this.SetsPlayer1.splice(this.SetsPlayer1.indexOf(this.SetsPlayer4[5]),1);
+
+      [...this.tablePlayer1.children[0].children].forEach(element=>{
+        element.remove();
+      })
+
+      this.SetsPlayer1.map(value => {
+        addNewImg(this.tablePlayer1.children[0], "cardInHand", value.img)
+      })
+
+      this.initialStage3();
+    }
+  }
+
+
+  initialStage3() {
+    console.log("initialStage3")
+  }
 
   initialStage4() {}
 }

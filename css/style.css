@@ -1,0 +1,10 @@
+.hideElement{
+    display: none;
+}
+
+.greyElement{
+    display: inline-block;
+    border: 1px solid #555;
+    background-color: #ccc;
+    padding: 15px;
+}
